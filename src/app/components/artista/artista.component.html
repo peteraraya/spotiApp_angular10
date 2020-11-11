@@ -1,0 +1,73 @@
+
+<app-loading *ngIf="loadingArtist"></app-loading>
+<div class="row mt-1 bg-titulo pt-3 shadow rounded animated fadeIn border" *ngIf="!loadingArtist">
+    <div class="col-3 text-center text-left-sm mt-2">
+        <img [src]="artista.images | noimage" class="img-thumbnail img-circle p-0" alt="artista.name">
+    </div>
+    
+    <div class="col-7">
+        <h3 class="p-2 border text-center p-4">{{ artista.name }}</h3>
+        <div class="border p-2 text-center">
+            <h6>popularidad<span class="badge badge-danger rounded shadow">{{ artista.popularity}}%</span></h6>
+            <h6>seguidores<span class="badge badge-danger rounded shadow">{{ artista.followers.total}}</span></h6>
+        </div>
+        <p class="mt-1 p-0">
+            <a 
+                [href]="artista.external_urls.spotify" 
+                target="_blank" 
+                class="mt-1 btn btn-outline-info shadow btn-block"
+            >
+                Ir a la página del artista
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </p>
+    </div>
+    <div class="col-2">
+        <button [routerLink]="['/search']" class="btn btn-danger shadow btn-sm " >
+            <span class="p-0">
+                <i class="fas fa-arrow-left"></i>
+                volver
+            </span>
+        </button>
+    </div>
+</div>
+
+<div class="row mt-1 animated fadeIn">
+    <div class="col-12 table-responsive">
+        <table class="table table-dark table-hover shadow rounded">
+            <thead>
+                <tr class="text-center bg-spotify p-0 m-0">
+                    <th class="p-1">Foto</th>
+                    <th class="p-1">Album</th>
+                    <th class="p-1">Canción</th>
+                    <th class="p-1">Vista Previa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-dark2" *ngFor="let top of topTracks">
+                 <td class="text-center align-middle">
+                    <img [src]="top.album.images[0].url" alt="top.name" class="img-thumb p-0 shadow"> 
+                    </td>
+                 <td class="text-center align-middle">
+                     {{ top.album.name }}
+                 </td>
+                 <td class="text-center align-middle">
+                    {{ top.name }}
+                 </td>
+                 <td>
+                <iframe [src]="top.uri | domseguro" 
+                        width="300" 
+                        height="80" 
+                        frameborder="0"
+                        allowtransparency="true" 
+                        allow="encrypted-media"
+                        class=" w-100"
+                        >
+                </iframe>
+                   <!-- <audio [src]="top.preview_url" controls></audio> -->
+                 </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
